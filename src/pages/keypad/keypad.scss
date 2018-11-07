@@ -1,0 +1,29 @@
+page-keypad {
+	.keypad-value {
+		width: 100%; 
+		text-align: center; 
+		font-size: 2em;
+		margin-top: 30px;
+	}
+	.keypad-note {
+		width: 100%; 
+		text-align: center;
+		color: #368AFF;
+		margin-top: 10px;
+		font-size: 1.1em;
+	}
+	.keypad-dial {
+		width: 100%;
+		text-align: center;
+		margin-top: 7px;
+	}
+	.keypad-dial-number {
+		width: 70px; 
+		height: 70px; 
+		background-color: rgb(240, 239, 239);
+		border-radius: 100px;
+		font-size: 2.1em;
+		display: inline-block;
+		padding-top: 13px;
+	}
+}

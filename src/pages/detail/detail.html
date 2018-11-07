@@ -1,0 +1,77 @@
+<ion-header no-border no-shadow>
+ 	<ion-navbar>
+		 <ion-buttons end>
+			 <button ion-button>
+				 편집
+			</button>
+		 </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="detail-profile-content">
+		<div class="detail-profile-icon">
+			<span style="margin: auto; padding: 5px">{{information.firstname}}</span>
+		</div>
+		<div class="detail-profile-name">
+			{{information.name}}
+		</div>
+		<div class="detail-profile-buttons">
+			<ion-grid no-padding style="width: 80%; margin-top: 10px; font-size: 0.8em">
+				<ion-row>
+					<ion-col>
+						<button ion-button class="detail-profile-button">
+							<ion-icon name="ios-chatbubbles"></ion-icon>
+						</button>
+					</ion-col>
+					<ion-col>
+						<button ion-button class="detail-profile-button">
+							<ion-icon name="ios-call"></ion-icon>
+						</button>
+					</ion-col>
+					<ion-col>
+						<button ion-button class="detail-profile-off-button">
+							<ion-icon name="ios-videocam"></ion-icon>
+						</button>
+					</ion-col>
+					<ion-col>
+						<button ion-button class="detail-profile-off-button">
+							<ion-icon name="ios-mail"></ion-icon>
+						</button>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col style="color: #368AFF">메시지</ion-col>
+					<ion-col style="color: #368AFF">휴대전화</ion-col>
+					<ion-col style="color: gray;">비디오</ion-col>
+					<ion-col style="color: gray;">메일</ion-col>
+				</ion-row>
+			</ion-grid>
+		</div>
+	</div>
+	<ion-list>
+		<ion-item>
+			<span style="font-size: 0.7em;">휴대전화</span><br>
+			<span style="color: #368AFF; font-size: 0.8em">{{information.phone}}</span>
+		</ion-item>
+		<ion-item>
+			<ion-note style="font-size: 0.7em;">메모</ion-note><br>
+			<span style="font-size: 0.8em">메모 내용</span>
+		</ion-item>
+		<ion-item>
+			<span style="font-size: 0.8em; color: #368AFF;">메시지 보내기</span>
+		</ion-item>
+		<ion-item>
+			<span style="font-size: 0.8em; color: #368AFF;">연락처 공유</span>
+		</ion-item>
+		<ion-item no-lines>
+			<span style="font-size: 0.8em; color: #368AFF;">즐겨찾기에 추가</span>
+		</ion-item>
+	</ion-list>
+
+	<ion-list>
+		<ion-item no-lines>
+			<span style="font-size: 0.8em; color: #368AFF;">이 발신자 차단</span>
+		</ion-item>
+	</ion-list>
+</ion-content>

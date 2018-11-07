@@ -1,0 +1,20 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			연락처
+		</ion-title>
+	</ion-navbar>
+	<ion-searchbar style="background-color: #F9F9F9" (ionInput)="search($event)" (ionCancel)="search($event)"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+	<div *ngFor="let items of names">
+		<ion-list *ngIf="names[items.id].user.length">
+			<ion-list-header class="contact-list-header">{{items.code}}</ion-list-header>
+			<ion-item *ngFor="let user of names[items.id].user" class="contact-list-item" (click)="movePage(user.id)">
+				{{user.name}}
+			</ion-item>
+		</ion-list>
+	</div>
+	<p style="text-align: center; color: #8C8C8C;">{{number}}개의 연락처</p>
+</ion-content>
