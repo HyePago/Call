@@ -55,10 +55,8 @@ export class MyApp {
 				let contacts: Array<any> = [];
 
 				var response = this.http.get(url).map(res => res.json()).subscribe(data => {
-					/*ata.sort(function(a, b) {
-						return a.name > b.name? 1: a.name < b.name? -1:0;
-					});*/
 					for(let i=0; i<data.length; i++) {
+						// 각 연락처마다 번호나 이메일을 여러 개 저장할 수 있도록 한다.
 						let phones = Array<{
 							id: number,
 							division: string,

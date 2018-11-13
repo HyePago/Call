@@ -41,26 +41,24 @@ export class AddContactPage {
 		
 		if(this.information) {
 			this.lastName = this.information.name.substring(0, this.information.name.indexOf(' '));
-			this.firstName = this.information.name.substring(this.information.name.indexOf(' '), this.information.name.length);
+			this.firstName = this.information.name.substring(this.information.name.indexOf(' ') + 1, this.information.name.length);
 		
 			this.callNumber = this.information.phone;
 			this.email = this.information.email;
-		}
-		if(input) {
+		} else if(input) {
 			this.callNumber.push({
 				id: this.callNumber.length,
 				division: '휴대전화',
 				value: input
 			});
-		}
-		if(this.add) {
+		} else if(this.add) {
 			for(let i=0; i<this.contacts.length; i++) {
 				if(this.add.id == this.contacts[i].id) {
 					this.callNumber = this.contacts[i].phone;
 					this.email = this.contacts[i].email;
 			
 					this.lastName = this.contacts[i].name.substring(0, this.contacts[i].name.indexOf(' '));
-					this.firstName = this.contacts[i].name.substring(this.contacts[i].name.indexOf(' '), this.contacts[i].name.length);
+					this.firstName = this.contacts[i].name.substring(this.contacts[i].name.indexOf(' ') + 1, this.contacts[i].name.length);
 				
 					this.callNumber.push ({
 						id: this.callNumber.length,
@@ -156,10 +154,6 @@ export class AddContactPage {
 
 			this.storageProvider.setContacts(this.contacts);
 		}
-/*
-		this.storageService.getCall().then((val) => {
-			this.events.publish('getcall', val);
-		});*/
 
 		this.navCtrl.pop();
 	}
@@ -173,11 +167,6 @@ export class AddContactPage {
 			}
 
 			this.storageProvider.setContacts(this.contacts);
-/*
-			this.storageService.getCall().then((val) => {
-				this.events.publish('getcall', val);
-			});
-*/
 			this.navCtrl.pop();
 			this.navCtrl.pop();
 		}	

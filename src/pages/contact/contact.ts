@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import { DetailPage } from '../detail/detail';
 import { AddContactPage } from '../add-contact/add-contact';
 import { StorageProvider } from '../../providers/storage/storage';
+import { ToggleGesture } from 'ionic-angular/umd/components/toggle/toggle-gesture';
 
 export interface User {
 	name: string,
@@ -31,39 +32,44 @@ export class ContactPage {
 	datas: Array<any>;
 
 	constructor(public navCtrl: NavController, public http: Http, public storageProvider: StorageProvider) {
-		// storage.get(str).then((val) => {});
 		this.names = [];
 		this.number = 0;
 		this.datas = [];
 
-		for(let i=0; i<26; i++) {
-			this.names.push({
-				user: [],
-				code: String.fromCharCode(i + 97),
-				id: i,
-			});
-		}
-
-		this.sortData();
+		this.sortData('');
 	}
 	
-	sortData(){
+	sortData(text){
 		this.storageProvider.contactsCast.subscribe(contacts => {
-			this.datas = contacts;
+			this.names = [];
+			this.number = 0;
+
+			this.datas = contacts.slice(0);
+
+			for(let i=0; i<26; i++) {
+				this.names.push({
+					user: [],
+					code: String.fromCharCode(i + 97),
+					id: i,
+				});
+			}
 
 			this.datas.sort(function(a, b) {
 				return a.name > b.name? 1: a.name < b.name? -1 : 0;
 			});
-		
+			
 			for(let i=0; i<this.datas.length; i++) {
-				this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
-					name: this.datas[i].name,
-					id: this.datas[i].id
-				});
-		
-				this.number++;
+				if(this.datas[i].name.toLowerCase().indexOf(text.toLowerCase()) != -1) {
+					this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
+						name: this.datas[i].name,
+						id: this.datas[i].id
+					});
+
+					this.number++;
+				}		
 			}
 		});
+
 	}
 	
 	movePage(uid) {
@@ -71,35 +77,7 @@ export class ContactPage {
 	}
 
 	search(event: any) {
-		this.names = [];
-		this.number = 0;
-		this.datas = [];
-
-		for(let i=0; i<26; i++) {
-			this.names.push({
-				user: [],
-				code: String.fromCharCode(i + 97),
-				id: i,
-			});
-		}
-
-
-		this.storageProvider.contactsCast.subscribe(contacts => this.datas = contacts);
-
-		this.datas.sort(function(a, b) {
-			return a.name > b.name? 1: a.name < b.name? -1 : 0;
-		});
-	
-		for(let i=0; i<this.datas.length; i++) {
-			if(this.datas[i].name.toLowerCase().indexOf(event.target.value.toLowerCase()) != -1) {
-				this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
-					name: this.datas[i].name,
-					id: this.datas[i].id
-				});
-			}
-	
-			this.number++;
-		}
+		this.sortData(event.target.value);
 	}
 
 	addClick() {

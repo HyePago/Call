@@ -36,7 +36,16 @@ export class SelectContactPage {
 
 		this.input = this.navParams.get('input');
 
-		// storage.get(str).then((val) => {});
+		this.storageProvider.favoritesCast.subscribe(favorites => {
+			this.favorites = favorites;
+		});
+
+		this.sortData('');
+	}
+
+	sortData(text){
+		this.names = [];
+		this.number = 0;
 
 		for(let i=0; i<26; i++) {
 			this.names.push({
@@ -46,32 +55,24 @@ export class SelectContactPage {
 			});
 		}
 
-		this.storageProvider.favoritesCast.subscribe(favorites => {
-			this.favorites = favorites;
-		});
-
-		this.sortData();
-	}
-
-	sortData(){
 		this.storageProvider.contactsCast.subscribe(contacts => {
 			this.datas = contacts;
+		});
 
-			this.datas.sort(function(a, b) {
-				return a.name > b.name? 1: a.name < b.name? -1 : 0;
-			});
+		this.datas.sort(function(a, b) {
+			return a.name > b.name? 1: a.name < b.name? -1 : 0;
+		});
 	
-			for(let i=0; i<this.datas.length; i++) {
+		for(let i=0; i<this.datas.length; i++) {
+			if(this.datas[i].name.toLowerCase().indexOf(text.toLowerCase()) != -1) {
 				this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
 					name: this.datas[i].name,
 					id: this.datas[i].id
 				});
-	
+		
 				this.number++;
 			}
-
-			
-		});
+		}
 	}
 	movePage(uid) {
 		if(this.input) {

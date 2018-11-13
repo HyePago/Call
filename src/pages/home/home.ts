@@ -26,12 +26,6 @@ export class HomePage {
 		this.editClicked = false;
 
 		this.storageProvider.favoritesCast.subscribe(favorites => this.favorites = favorites);
-
-		/*this.storageProvider.getStorage('favorites').then((val) => {
-			console.log(val);
-			this.favorites = val;
-		});*/
-		// storageProvider.getStorage('favorites');
 	}
 	
 	pushPage() {

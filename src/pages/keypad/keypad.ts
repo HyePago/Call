@@ -23,6 +23,7 @@ export class KeypadPage {
 	num: number[];
 	stateStr: string;
 	calls: Array<any>;
+	contacts: Array<any>;
 
 	constructor(public navCtrl: NavController, public actionSheetCtrl: ActionSheetController, private datePipe: DatePipe, private callNumber: CallNumber, public platform: Platform, public storageProvider: StorageProvider) {
 		this.result = "";
@@ -40,6 +41,9 @@ export class KeypadPage {
 
 		this.storageProvider.callsCast.subscribe(calls => {
 			this.calls = calls;
+		});
+		this.storageProvider.contactsCast.subscribe(contacts => {
+			this.contacts = contacts.slice(0);
 		});
 	}
 
@@ -114,18 +118,14 @@ export class KeypadPage {
 		};
 
 		// 1. 연락처에 있는 번호인지 확인
-		this.storageProvider.contactsCast.subscribe(contacts => {
-			for(let i=0; i<contacts.length; i++) {
-				if(contacts[i].id != 'favorites' && contacts[i].id != 'call') {
-					for(let i=0; i<contacts[i].phone.length; i++) {
-						if(this.result == contacts[i].phone[i].value) {
-							data.name = contacts[i].name;
-							data.uid = contacts[i].id;
-						}
-					}
+		for(let i=0; i<this.contacts.length; i++) {
+			for(let j=0; j<this.contacts[i].phone.length; j++) {
+				if(this.result == this.contacts[i].phone[j].value) {
+					data.name = this.contacts[i].name;
+					data.uid = this.contacts[i].id;
 				}
 			}
-		});
+		}
 
 		if(Math.floor(Math.random() * (100 - 1) + 1) % 2) {
 			data.bool = true;
@@ -146,18 +146,14 @@ export class KeypadPage {
 	selectContact() {
 		this.stateStr = '번호추가';
 
-		this.storageProvider.contactsCast.subscribe(contacts => {
-			for(let i=0; i<contacts.length; i++) {
-				if(contacts[i].id != 'favorites' && contacts[i].id != 'call') {
-					for(let i=0; i<contacts[i].phone.length; i++) {
-						if(contacts[i].phone[i].value == this.result) {
-							this.stateStr = contacts[i].name;
-	
-							break;
-						}
-					}
+		for(let i=0; i<this.contacts.length; i++) {
+			for(let j=0; j<this.contacts[i].phone.length; j++) {
+				if(this.contacts[i].phone[j].value == this.result) {
+					this.stateStr = this.contacts[i].name;
+
+					break;
 				}
 			}
-		});
+		}
 	}
 }
