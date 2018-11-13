@@ -1,17 +1,42 @@
 <ion-header>
  	<ion-navbar>
+		<ion-buttons start>
+			<button ion-button (click)="pushPage()">
+				<ion-icon name="md-add"></ion-icon>
+			</button>
+		</ion-buttons>
 		<ion-title>즐겨찾기</ion-title>
+		<ion-buttons end>
+			<button ion-button (click)="editClick()" *ngIf="!(editClicked)">
+				편집
+			</button>
+			<button ion-button (click)="editClick()" *ngIf="editClicked">
+				완료
+			</button>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+	<div *ngIf="favorites">
+		<!--<div style="color: gray; height: 50px; text-align: center; margin: auto;">
+			즐겨찾기 없음
+		</div>
+		-->
+	</div>
+	<ion-list>
+		<ion-item *ngFor="let favorite of favorites"> 
+			<ion-item>
+				<button ion-button (click)="clickDel(favorite.id, favorite.division)" *ngIf="editClicked" item-start style="background-color: white;">
+					<ion-icon name="ios-remove-circle" style="color: red;"></ion-icon>
+				</button>
+				<ion-avatar item-start>
+					<div style="width: 35px; height: 35px; background-color: gray; border-radius: 200px;"></div>
+				</ion-avatar>
+				<p>{{favorite.name}}</p>
+				<p><ion-icon item-start name="{{favorite.icon}}" style="padding: 0; margin: 0; margin-right: 5px;"></ion-icon> {{favorite.division}}</p>
+				<ion-icon name="ios-information-circle-outline" (click)="detailPush(favorite.id)" item-end color="primary"></ion-icon>
+			</ion-item>
+		</ion-item>
+	</ion-list>
 </ion-content>

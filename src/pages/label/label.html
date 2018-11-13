@@ -1,0 +1,26 @@
+<ion-header>
+	<ion-navbar hideBackButton="true">
+		<ion-title>
+			레이블			
+		</ion-title>
+		 <ion-buttons start>
+			 <button ion-button (click)="backClick()">
+				 취소
+			</button>
+		 </ion-buttons>
+		 <ion-buttons end>
+			 <button ion-button>
+				 완료
+			</button>
+		 </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content color="light" style="background-color: rgb(235, 235, 235);">
+	<ion-list style="margin-top: 28px;">
+		<ion-item *ngFor="let label of labels" (click)="labelClick(label)">
+			{{ label }}
+			<ion-icon name="ios-arrow-down" style="color: #368AFF" item-end *ngIf="label==input"></ion-icon>
+		</ion-item>
+	</ion-list>
+</ion-content>

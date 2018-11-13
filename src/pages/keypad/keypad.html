@@ -3,27 +3,33 @@
 		<span>{{result}}</span>
 	</div>
 	<div class="keypad-note">
-		<span *ngIf="result" style="height: 20px;">번호추가</span><span style="height: 20px;">&nbsp;</span>
+		<span *ngIf="result" style="height: 20px;" (click)="showActionSheet()">{{stateStr}}</span><span style="height: 20px;">&nbsp;</span>
 	</div>
 	<div class="keypad-dial">
 		<ion-grid style="width: 86%;">
-			<ion-row *ngFor="let i of num" style="padding-top: 17px;">
+			<ion-row *ngFor="let i of num" style="padding-top: 13px;">
 				<ion-col>
-					<div class="keypad-dial-number" (click)="dialClick(numbers[i])">{{numbers[i]}}<span style="font-size: 0.4em; display: block; font-weight: bold; margin: -5px;">{{words[i]}}</span></div>
+					<button ion-button (click)="dialClick(numbers[i])" class="keypad-dial-button">
+						<span>{{numbers[i]}}<span style="font-size: 0.4em; display: block; font-weight: bold;">{{words[i]}}</span></span>
+					</button>
 				</ion-col>
 				<ion-col>
-					<div class="keypad-dial-number" (click)="dialClick(numbers[i+1])">{{numbers[i + 1]}}<span style="font-size: 0.4em; display: block; font-weight: bold; margin: -5px;">{{words[i+1]}}</span></div>
+					<button ion-button (click)="dialClick(numbers[i+1])" class="keypad-dial-button">
+						<span>{{numbers[i + 1]}}<span style="font-size: 0.4em; display: block; font-weight: bold;">{{words[i+1]}}</span></span>
+					</button>
 				</ion-col>
 				<ion-col>
-					<div class="keypad-dial-number" (click)="dialClick(numbers[i+2])">{{numbers[i + 2]}}<span style="font-size: 0.4em; display: block; font-weight: bold; margin: -5px;">{{words[i+2]}}</span></div>
+					<button ion-button (click)="dialClick(numbers[i+2])" class="keypad-dial-button">
+						<span>{{numbers[i + 2]}}<span style="font-size: 0.4em; display: block; font-weight: bold;">{{words[i+2]}}</span></span>
+					</button>
 				</ion-col>
 			</ion-row>
-			<ion-row style="padding-top: 17px;">
+			<ion-row style="padding-top: 13px;">
 				<ion-col></ion-col>
 				<ion-col>
-					<div class="keypad-dial-number" style="background-color: limegreen">
+					<button class="keypad-dial-button" style="background-color: limegreen" (click)="call()">
 						<ion-icon name="ios-call" style="color: white; padding-top: 6px"></ion-icon>
-					</div>
+					</button>
 				</ion-col>
 				<ion-col style="text-align: center; padding-top: 20px;">
 					<button ion-button style="background-color: white;" (click)="dialDel()">

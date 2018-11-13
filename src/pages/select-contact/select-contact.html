@@ -1,12 +1,12 @@
 <ion-header>
-	<ion-navbar>
+	<ion-navbar hideBackButton="true">
 		<ion-title>
 			연락처
 		</ion-title>
 		<ion-buttons end>
-			<button ion-button (click)="addClick()">
-				<ion-icon name="md-add" style="margin-right: 10px; width: 17px; height: 17px;" color="primary"></ion-icon>
-			</button>
+			<button ion-button (click)="cancelClick()">
+				취소
+		   </button>
 		</ion-buttons>
 	</ion-navbar>
 	<ion-searchbar style="background-color: #F9F9F9" (ionInput)="search($event)" (ionCancel)="search($event)"></ion-searchbar>

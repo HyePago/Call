@@ -4,6 +4,7 @@ page-keypad {
 		text-align: center; 
 		font-size: 2em;
 		margin-top: 30px;
+		height: 33px;
 	}
 	.keypad-note {
 		width: 100%; 
@@ -11,6 +12,7 @@ page-keypad {
 		color: #368AFF;
 		margin-top: 10px;
 		font-size: 1.1em;
+		height: 20px;
 	}
 	.keypad-dial {
 		width: 100%;
@@ -25,5 +27,19 @@ page-keypad {
 		font-size: 2.1em;
 		display: inline-block;
 		padding-top: 13px;
+	}
+	.keypad-dial-button {
+		width: 70px;
+		height: 70px;
+		background-color: rgb(240, 239, 239);
+		border-radius: 200px;
+		color: black;	
+		font-size: 2.1em;	
+	}
+	.text-input-ios {
+		margin: 0;
+	}
+	.text-input {
+		margin: 0;
 	}
 }

@@ -1,13 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav } from 'ionic-angular';
+import { NavController, Nav, Events } from 'ionic-angular';
 
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { Storage } from '@ionic/storage';
-import { stringify } from '@angular/compiler/src/util';
-
 import { DetailPage } from '../detail/detail';
+import { AddContactPage } from '../add-contact/add-contact';
+import { StorageProvider } from '../../providers/storage/storage';
 
 export interface User {
 	name: string,
@@ -29,11 +28,13 @@ export class ContactPage {
 
 	names: Array<Information>;
 	number: number;
+	datas: Array<any>;
 
-	constructor(public navCtrl: NavController, public http: Http, public storage: Storage) {
+	constructor(public navCtrl: NavController, public http: Http, public storageProvider: StorageProvider) {
+		// storage.get(str).then((val) => {});
 		this.names = [];
 		this.number = 0;
-		// storage.get(str).then((val) => {});
+		this.datas = [];
 
 		for(let i=0; i<26; i++) {
 			this.names.push({
@@ -43,19 +44,28 @@ export class ContactPage {
 			});
 		}
 
-		storage.forEach((value, key, index) => {
-			/*if(typeof this.names[key.charCodeAt(0)-97].name == undefined) {
-				this.names[key.charCodeAt(0)].name = [];
-			}*/
+		this.sortData();
+	}
+	
+	sortData(){
+		this.storageProvider.contactsCast.subscribe(contacts => {
+			this.datas = contacts;
 
-			this.names[key.toLowerCase().charCodeAt(0) - 97].user.push({
-				name: key,
-				id: value.id
+			this.datas.sort(function(a, b) {
+				return a.name > b.name? 1: a.name < b.name? -1 : 0;
 			});
-			this.number++;
+		
+			for(let i=0; i<this.datas.length; i++) {
+				this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
+					name: this.datas[i].name,
+					id: this.datas[i].id
+				});
+		
+				this.number++;
+			}
 		});
 	}
-
+	
 	movePage(uid) {
 		this.navCtrl.push(DetailPage, {id: uid});
 	}
@@ -63,6 +73,7 @@ export class ContactPage {
 	search(event: any) {
 		this.names = [];
 		this.number = 0;
+		this.datas = [];
 
 		for(let i=0; i<26; i++) {
 			this.names.push({
@@ -72,21 +83,26 @@ export class ContactPage {
 			});
 		}
 
-		this.storage.forEach((value, key, index) => {
-			/*if(typeof this.names[key.charCodeAt(0)-97].name == undefined) {
-				this.names[key.charCodeAt(0)].name = [];
-			}*/
 
-			if(key.toLowerCase().indexOf(event.target.value.toLowerCase()) != -1) {
-				this.names[key.toLowerCase().charCodeAt(0) - 97].user.push({
-					name: key,
-					id: value.id
-				});
+		this.storageProvider.contactsCast.subscribe(contacts => this.datas = contacts);
 
-				this.number++;
-			}
+		this.datas.sort(function(a, b) {
+			return a.name > b.name? 1: a.name < b.name? -1 : 0;
 		});
+	
+		for(let i=0; i<this.datas.length; i++) {
+			if(this.datas[i].name.toLowerCase().indexOf(event.target.value.toLowerCase()) != -1) {
+				this.names[this.datas[i].name.toLowerCase().charCodeAt(0) - 97].user.push({
+					name: this.datas[i].name,
+					id: this.datas[i].id
+				});
+			}
+	
+			this.number++;
+		}
+	}
 
-		console.log("event : " + event.target.value);
+	addClick() {
+		this.navCtrl.push(AddContactPage);
 	}
 }

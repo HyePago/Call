@@ -1,0 +1,75 @@
+<ion-header no-border no-shadow>
+	<ion-navbar color="white" hideBackButton="true">
+		<ion-title>
+			새로운 연락처			
+		</ion-title>
+		 <ion-buttons start (click)="backClick()">
+			 <button ion-button>
+				 취소
+			</button>
+		 </ion-buttons>
+		 <ion-buttons end (click)="addContact()">
+			 <button ion-button>
+				 완료
+			</button>
+		 </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<img src="../../assets/icon/favicon.ico" class="profile-icon" />
+			</ion-col>
+			<ion-col col-10>
+				<ion-input type="text" placeholder="성" class="add-input" [(ngModel)]="lastName"></ion-input><br>
+				<ion-input type="text" placeholder="이름"class="add-input" [(ngModel)]="firstName"></ion-input><br>
+				<ion-input type="text" placeholder="직장"class="add-input" [(ngModel)]="company"></ion-input>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-grid style="font-size: 0.9em;">
+		<ion-list no-lines>
+			<ion-row style="border-bottom: rgb(199, 199, 199) 1px solid;" *ngFor="let information of callNumber">
+				<ion-col col-4 style="border-right: rgb(199, 199, 199) 1px solid;">
+					<ion-icon name="ios-remove-circle" style="color: red; width: 13px; height: 17px;"></ion-icon> 
+					&nbsp;&nbsp;<span (click)="pushLabelPage(information.id, 'number')"><span style="color: #368AFF;">{{information.division}}</span> <ion-icon name="ios-arrow-forward" style="color: gray; width: 15px; height: 15px;"></ion-icon></span>
+				</ion-col>
+				<ion-col>
+					<ion-input type="text" placeholder="전화" style="height: 10px; padding: 0; margin: 0; margin-top: -10px; padding-left: 13px;" value="{{information.value}}" [(ngModel)]="information.value"></ion-input>
+				</ion-col>
+			</ion-row>
+		</ion-list>
+		<ion-row (click)="addInput('number')">
+			<ion-col col-12 style="border-bottom: rgb(199, 199, 199) 1px solid; height: 30px;">
+				<ion-icon name="ios-add-circle" style="color: limegreen; width: 13px; height: 17px;"></ion-icon> 
+				&nbsp;&nbsp;전화번호 추가
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-grid style="margin-top: 20px; font-size: 0.9em;">
+		<ion-row style="border-bottom: rgb(199, 199, 199) 1px solid;"  *ngFor="let information of email">
+			<ion-col col-4 style="border-right: rgb(199, 199, 199) 1px solid;">
+				<ion-icon name="ios-remove-circle" style="color: red; width: 13px; height: 17px;"></ion-icon> 
+				&nbsp;&nbsp;<span (click)="pushLabelPage(information.id, 'email')"><span style="color: #368AFF;">{{information.division}}</span> <ion-icon name="ios-arrow-forward" style="color: gray; width: 15px; height: 15px;"></ion-icon></span>
+			</ion-col>
+			<ion-col>
+				<ion-input type="text" placeholder="이메일" style="height: 10px; padding: 0; margin: 0; margin-top: -10px; padding-left: 13px;" value="{{information.value}}" [(ngModel)]="information.value"></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row (click)="addInput('email')">
+			<ion-col style="border-bottom: rgb(199, 199, 199) 1px solid;">
+				<ion-icon name="ios-add-circle" style="color: limegreen; width: 13px; height: 17px;"></ion-icon> 
+				&nbsp;&nbsp;이메일 추가
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col *ngIf="information" style="margin-top: 20px; padding-left: 20px;" (click)="deleteContact()"> 
+				<span style="color: red">연락처 삭제</span>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

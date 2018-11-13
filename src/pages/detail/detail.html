@@ -1,7 +1,7 @@
 <ion-header no-border no-shadow>
  	<ion-navbar>
 		 <ion-buttons end>
-			 <button ion-button>
+			 <button ion-button (click)="editClick()">
 				 편집
 			</button>
 		 </ion-buttons>
@@ -49,22 +49,27 @@
 			</ion-grid>
 		</div>
 	</div>
+	<div *ngFor="let userCall of userCalls">
+		<span>{{userCall.time}}</span>
+		<span *ngIf="userCall.bool">발신 통화</span>
+		<span *ngIf="!userCall.bool">부재중 통화</span>
+	</div>
 	<ion-list>
-		<ion-item>
-			<span style="font-size: 0.7em;">휴대전화</span><br>
-			<span style="color: #368AFF; font-size: 0.8em">{{information.phone}}</span>
+		<ion-item *ngFor="let phone of information.phone">
+			<span style="font-size: 0.7em;">{{phone.division}}</span><br>
+			<span style="color: #368AFF; font-size: 0.8em">{{phone.value}}</span>
 		</ion-item>
 		<ion-item>
 			<ion-note style="font-size: 0.7em;">메모</ion-note><br>
 			<span style="font-size: 0.8em">메모 내용</span>
-		</ion-item>
+		</ion-item> 
 		<ion-item>
 			<span style="font-size: 0.8em; color: #368AFF;">메시지 보내기</span>
 		</ion-item>
 		<ion-item>
 			<span style="font-size: 0.8em; color: #368AFF;">연락처 공유</span>
 		</ion-item>
-		<ion-item no-lines>
+		<ion-item no-lines (click)="addFavorite()">
 			<span style="font-size: 0.8em; color: #368AFF;">즐겨찾기에 추가</span>
 		</ion-item>
 	</ion-list>
